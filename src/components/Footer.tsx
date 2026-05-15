@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Instagram, Facebook, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { Instagram, Facebook, Mail, Phone, MapPin, MessageCircle, BookOpen } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -20,9 +20,20 @@ export default function Footer() {
               소상공인의 비즈니스 혁신을 위해 데이터와 AI 기술을 결합하여 고전환 랜딩페이지 솔루션을 제공합니다. 예쁜 디자인을 넘어 매출을 만듭니다.
             </p>
             <div className="flex gap-4">
-              {[Instagram, Facebook, Mail].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-blue/20 hover:text-brand-blue transition-all border border-white/10">
-                  <Icon className="w-5 h-5" />
+              {[
+                { Icon: Instagram, href: '#' },
+                { Icon: Facebook, href: '#' },
+                { Icon: Mail, href: 'mailto:skh@barrierzone.kr' },
+                { Icon: BookOpen, href: 'https://blog.naver.com/barriernote' }
+              ].map((item, i) => (
+                <a 
+                  key={i} 
+                  href={item.href} 
+                  target={item.href.startsWith('http') ? "_blank" : undefined}
+                  rel={item.href.startsWith('http') ? "noopener noreferrer" : undefined}
+                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-blue/20 hover:text-brand-blue transition-all border border-white/10"
+                >
+                  <item.Icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
@@ -43,15 +54,15 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-muted-foreground">
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-brand-blue" />
-                010-0000-0000
+                070-8027-1890
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-brand-blue" />
-                contact@innovation-ai.kr
+                skh@barrierzone.kr
               </li>
               <li className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-brand-blue" />
-                서울특별시 강남구 테헤란로 123
+                경기도 시흥시 은계호수로 49 2093호
               </li>
             </ul>
           </div>
@@ -69,12 +80,11 @@ export default function Footer() {
         
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-muted-foreground">
           <div className="space-x-4">
-            <span>사업자등록번호: 000-00-00000</span>
-            <span>대표: 홍길동</span>
-            <span>통신판매업신고: 제2024-서울강남-0000호</span>
+            <span>사업자등록번호: 160-01-02312</span>
+            <span>대표: 서경휘</span>
           </div>
           <div>
-            &copy; {currentYear} Innovation AI Inc. All rights reserved.
+            &copy; {currentYear} Barrier Note. All rights reserved.
           </div>
           <div className="space-x-6">
             <a href="#" className="hover:text-white transition-colors">이용약관</a>

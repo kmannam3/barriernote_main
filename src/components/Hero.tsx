@@ -22,10 +22,9 @@ export default function Hero() {
         </div>
         
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-8 leading-[1.1] text-slate-900">
-          예쁜 홈페이지가 아니라<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-violet">
-            돈을 벌어다 주는
-          </span> 페이지를 만듭니다.
+          예쁜 홈페이지가<br />
+          아니라 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-violet">돈을 벌어다 주는</span><br />
+          페이지를 만듭니다.
         </h1>
         
         <p className="text-lg md:text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
