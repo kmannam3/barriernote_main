@@ -1,95 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { motion, AnimatePresence } from 'motion/react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Check, ClipboardList, Send, User, Building, ExternalLink, MessageSquare } from 'lucide-react';
-import { toast } from 'sonner';
-
-interface FormData {
-  name: string;
-  phone: string;
-  businessType: string;
-  website: string;
-  concern: string;
-}
-
-const steps = [
-  { id: 1, title: '기본 정보', icon: User, description: '성함과 연락처를 입력해주세요.' },
-  { id: 2, title: '업종 정보', icon: Building, description: '운영 중이신 사업의 종류입니다.' },
-  { id: 3, title: '분석 대상', icon: ExternalLink, description: '진단할 사이트 주소와 고민을 알려주세요.' },
-];
+import React from 'react';
+import { motion } from 'motion/react';
+import { Check, ClipboardList, ExternalLink } from 'lucide-react';
 
 export default function DiagnosisForm() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<FormData>({
-    defaultValues: {
-      name: '',
-      phone: '',
-      businessType: '',
-      website: '',
-      concern: ''
-    }
-  });
-
-  const formValues = watch();
-
-  // Load from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('diagnosis_form_draft');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      Object.entries(parsed).forEach(([key, value]) => {
-        setValue(key as keyof FormData, value as string);
-      });
-    }
-  }, [setValue]);
-
-  // Save to localStorage on change
-  useEffect(() => {
-    localStorage.setItem('diagnosis_form_draft', JSON.stringify(formValues));
-  }, [formValues]);
-
-  const onSubmit = (data: FormData) => {
-    console.log('Diagnosis Form Submitted:', data);
-    localStorage.removeItem('diagnosis_form_draft');
-    toast.success('AI 마케팅 진단 신청이 완료되었습니다!', {
-      description: '24시간 이내에 전문가가 분석 리포트와 함께 연락드립니다.',
-    });
-    setIsSubmitted(true);
-  };
-
-  const nextStep = () => {
-    if (currentStep < steps.length) setCurrentStep(prev => prev + 1);
-  };
-
-  const prevStep = () => {
-    if (currentStep > 1) setCurrentStep(prev => prev - 1);
-  };
-
-  if (isSubmitted) {
-    return (
-      <Card className="glass-card max-w-xl mx-auto text-center p-12 border-brand-blue/50">
-        <div className="w-20 h-20 bg-brand-blue/20 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-blue">
-          <Check className="w-10 h-10" />
-        </div>
-        <CardTitle className="text-3xl mb-4">신청 완료!</CardTitle>
-        <CardDescription className="text-lg">
-          정재하신 정보를 바탕으로 AI 분석이 시작되었습니다.<br />
-          최선을 다해 사장님의 비즈니스를 분석하겠습니다.
-        </CardDescription>
-        <Button className="mt-8 bg-brand-blue" onClick={() => setIsSubmitted(false)}>
-          처음으로 돌아가기
-        </Button>
-      </Card>
-    );
-  }
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc5oLDk1JpMJFR6xVA3Y8u006KRA-D4S9uaPk1AieqVFaWFoQ/viewform?fbzx=-2137932527351954253";
 
   return (
     <section id="diagnosis" className="py-24 px-6 md:px-12 relative overflow-hidden bg-slate-50">
@@ -144,124 +58,61 @@ export default function DiagnosisForm() {
         </div>
 
         <motion.div 
-          layout
-          className="glass-card p-6 md:p-10 border-slate-200 bg-white shadow-2xl relative"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative group"
         >
-          <div className="flex items-center justify-between mb-10">
-            {steps.map((step) => (
-              <div key={step.id} className="flex flex-col items-center gap-2 flex-1 relative">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center z-10 transition-colors ${
-                  currentStep >= step.id ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/30' : 'bg-slate-100 text-slate-400'
-                }`}>
-                  <step.icon className="w-5 h-5" />
-                </div>
-                <span className={`text-xs font-bold ${currentStep >= step.id ? 'text-slate-900' : 'text-slate-400'}`}>
-                  {step.title}
-                </span>
-                {step.id < steps.length && (
-                  <div className={`absolute top-5 left-[50%] w-full h-[2px] -z-0 ${
-                    currentStep > step.id ? 'bg-brand-blue' : 'bg-slate-100'
-                  }`} />
-                )}
+          <a 
+            href={GOOGLE_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block h-full"
+          >
+            <div className="glass-card p-6 md:p-10 border-slate-200 bg-white shadow-2xl relative transition-all duration-300 group-hover:border-brand-blue/30 group-hover:shadow-brand-blue/10 overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <ExternalLink className="w-24 h-24 text-brand-blue" />
               </div>
-            ))}
-          </div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 bg-brand-blue rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-blue/20">
+                    <ClipboardList className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-black text-slate-900">무료 진단 폼 작성하기</h3>
+                    <p className="text-sm text-slate-500 font-bold">1분이면 신청 완료됩니다.</p>
+                  </div>
+                </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <AnimatePresence mode="wait">
-              {currentStep === 1 && (
-                <motion.div
-                  key="step1"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-6"
-                >
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-slate-900 font-bold">성함 / 대표자명</Label>
-                    <Input id="name" placeholder="홍길동" {...register('name', { required: true })} className="bg-slate-50 border-slate-200 text-slate-900 font-medium py-6" />
+                <div className="space-y-6">
+                  <div className="p-5 rounded-xl border-2 border-slate-50 bg-slate-50/50 group-hover:border-brand-blue/10 transition-colors">
+                    <div className="text-xs font-black text-slate-400 mb-1">STEP 01</div>
+                    <div className="text-lg font-black text-slate-700">기본 정보 및 연락처 확인</div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-slate-900 font-bold">연락처</Label>
-                    <Input id="phone" placeholder="010-0000-0000" {...register('phone', { required: true })} className="bg-slate-50 border-slate-200 text-slate-900 font-medium py-6" />
+                  <div className="p-5 rounded-xl border-2 border-slate-50 bg-slate-50/50 group-hover:border-brand-blue/10 transition-colors">
+                    <div className="text-xs font-black text-slate-400 mb-1">STEP 02</div>
+                    <div className="text-lg font-black text-slate-700">업종 및 타겟 고객 분석</div>
                   </div>
-                </motion.div>
-              )}
+                  <div className="p-5 rounded-xl border-2 border-slate-50 bg-slate-50/50 group-hover:border-brand-blue/10 transition-colors">
+                    <div className="text-xs font-black text-slate-400 mb-1">STEP 03</div>
+                    <div className="text-lg font-black text-slate-700">마케팅 고민 상세 기술</div>
+                  </div>
+                </div>
 
-              {currentStep === 2 && (
-                <motion.div
-                  key="step2"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-6"
-                >
-                  <div className="space-y-2">
-                    <Label htmlFor="businessType" className="text-slate-900 font-bold">업종</Label>
-                    <Select onValueChange={(val) => setValue('businessType', val)} defaultValue={formValues.businessType}>
-                      <SelectTrigger className="bg-slate-50 border-slate-200 text-slate-900 font-medium h-12">
-                        <SelectValue placeholder="업종을 선택하세요" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="restaurant">음식점/카페</SelectItem>
-                        <SelectItem value="beauty">미용/에스테틱</SelectItem>
-                        <SelectItem value="education">교육/학원</SelectItem>
-                        <SelectItem value="service">전문 서비스/상담</SelectItem>
-                        <SelectItem value="shopping">쇼핑몰/커머스</SelectItem>
-                        <SelectItem value="other">기타</SelectItem>
-                      </SelectContent>
-                    </Select>
+                <div className="mt-10">
+                  <div className="w-full bg-gradient-to-r from-brand-blue to-brand-violet text-white font-black py-6 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-brand-blue/20 group-hover:scale-[1.02] transition-transform">
+                    구글폼으로 이동하여 진단 신청하기
+                    <ExternalLink className="w-5 h-5" />
                   </div>
-                </motion.div>
-              )}
+                </div>
 
-              {currentStep === 3 && (
-                <motion.div
-                  key="step3"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-6"
-                >
-                  <div className="space-y-2">
-                    <Label htmlFor="website" className="text-slate-900 font-bold">현재 사이트 주소 (없을 경우 생략)</Label>
-                    <Input id="website" placeholder="https://example.com" {...register('website')} className="bg-slate-50 border-slate-200 text-slate-900 font-medium py-6" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="concern" className="text-slate-900 font-bold">마케팅 고민 사항</Label>
-                    <Textarea 
-                      id="concern" 
-                      placeholder="예) 인스타그램 광고는 하는데 문의가 안와요." 
-                      {...register('concern', { required: true })} 
-                      className="bg-slate-50 border-slate-200 text-slate-900 font-medium min-h-[100px]" 
-                    />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="flex gap-4 mt-10">
-              {currentStep > 1 && (
-                <Button type="button" variant="outline" onClick={prevStep} className="flex-1 border-slate-200 text-slate-600 font-bold h-12">
-                  이전 단계
-                </Button>
-              )}
-              {currentStep < steps.length ? (
-                <Button type="button" onClick={nextStep} className="flex-1 bg-brand-blue text-white font-bold h-12 shadow-lg shadow-brand-blue/20">
-                  다음 단계
-                </Button>
-              ) : (
-                <Button type="submit" className="flex-1 bg-gradient-to-r from-brand-blue to-brand-violet text-white font-black h-12 shadow-xl shadow-brand-blue/20">
-                  <Send className="w-4 h-4 mr-2" />
-                  무료 진단 신청하기
-                </Button>
-              )}
+                <p className="text-center text-xs text-slate-400 mt-6 font-bold">
+                  * 클릭 시 정식 문의 폼(Google Forms)으로 안전하게 이동합니다.
+                </p>
+              </div>
             </div>
-            
-            <p className="text-center text-xs text-slate-400 mt-4 font-bold">
-              * 기재하신 정보는 분석 및 연락 목적으로만 사용되며 안전하게 보호됩니다.
-            </p>
-          </form>
+          </a>
         </motion.div>
       </div>
     </section>
