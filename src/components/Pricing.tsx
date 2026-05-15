@@ -107,13 +107,20 @@ export default function Pricing() {
                 </CardContent>
                 
                 <CardFooter className="p-8 bg-white border-t border-slate-100">
-                  <Button className={`w-full py-7 rounded-xl font-black text-lg transition-all ${
-                    plan.highlight 
-                      ? 'bg-brand-blue hover:bg-brand-blue/90 text-white shadow-lg shadow-brand-blue/20' 
-                      : 'bg-slate-900 hover:bg-slate-800 text-white'
-                  }`}>
-                    시작하기
-                  </Button>
+                  <a 
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSc5oLDk1JpMJFR6xVA3Y8u006KRA-D4S9uaPk1AieqVFaWFoQ/viewform?fbzx=-2137932527351954253"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full"
+                  >
+                    <Button className={`w-full py-7 rounded-xl font-black text-lg transition-all ${
+                      plan.highlight 
+                        ? 'bg-brand-blue hover:bg-brand-blue/90 text-white shadow-lg shadow-brand-blue/20' 
+                        : 'bg-slate-900 hover:bg-slate-800 text-white'
+                    }`}>
+                      시작하기
+                    </Button>
+                  </a>
                 </CardFooter>
               </Card>
             </motion.div>

@@ -32,10 +32,17 @@ export default function Hero() {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <Button size="lg" className="bg-brand-blue hover:bg-brand-blue/90 text-white text-lg font-bold px-8 py-7 rounded-2xl w-full sm:w-auto shadow-lg shadow-brand-blue/20">
-            무료 AI 마케팅 진단 받기
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+          <a 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSc5oLDk1JpMJFR6xVA3Y8u006KRA-D4S9uaPk1AieqVFaWFoQ/viewform?fbzx=-2137932527351954253"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto"
+          >
+            <Button size="lg" className="bg-brand-blue hover:bg-brand-blue/90 text-white text-lg font-bold px-8 py-7 rounded-2xl w-full shadow-lg shadow-brand-blue/20">
+              무료 AI 마케팅 진단 받기
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </a>
           <Button size="lg" variant="outline" className="border-slate-200 bg-white hover:bg-slate-50 text-slate-900 font-bold text-lg px-8 py-7 rounded-2xl w-full sm:w-auto">
             제작 사례 보기
           </Button>

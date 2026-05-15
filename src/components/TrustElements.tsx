@@ -12,6 +12,14 @@ import {
 
 const cases = [
   {
+    category: "설비",
+    title: "대정기공",
+    description: "검색 노출 구조 개선 후 신규 거래 문의 유입 증가",
+    increase: "180%",
+    image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80&w=800",
+    link: "https://daejung-gikong-499144391708.asia-east1.run.app/"
+  },
+  {
     category: "F&B",
     title: "성수동 브런치 카페 '모먼트'",
     description: "인스타그램 광고 최적화 및 예약 시스템 연동으로 주말 대기 시간 200% 증가",
@@ -24,13 +32,6 @@ const cases = [
     description: "전문 지식 중심의 AI 리포팅 페이지 제작으로 상담 신청 비용 45% 절감",
     increase: "180%",
     image: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&q=80&w=400"
-  },
-  {
-    category: "교육",
-    title: "대치동 '에듀원' 수학학원",
-    description: "무료 레벨 테스트 참여형 랜딩페이지 도입으로 방문객 DB 수집 4배 상승",
-    increase: "320%",
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=400"
   }
 ];
 
@@ -67,32 +68,41 @@ export default function TrustElements() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {cases.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group cursor-pointer"
-              >
-                <div className="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 shadow-xl border border-slate-100">
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                    <span className="bg-brand-blue text-white text-[10px] font-black px-2 py-1 rounded">문의 {item.increase} 증가</span>
+            {cases.map((item, i) => {
+              const CardContent = (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="group cursor-pointer"
+                >
+                  <div className="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 shadow-xl border border-slate-100">
+                    <img 
+                      src={item.image} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                      <span className="bg-brand-blue text-white text-[10px] font-black px-2 py-1 rounded">문의 {item.increase} 증가</span>
+                    </div>
                   </div>
-                </div>
-                <div className="text-xs font-black text-brand-blue mb-2 uppercase tracking-tight">{item.category}</div>
-                <h3 className="text-xl font-black mb-2 text-slate-900 group-hover:text-brand-blue transition-colors">{item.title}</h3>
-                <p className="text-slate-500 font-bold text-sm line-clamp-2">{item.description}</p>
-              </motion.div>
-            ))}
+                  <div className="text-xs font-black text-brand-blue mb-2 uppercase tracking-tight">{item.category}</div>
+                  <h3 className="text-xl font-black mb-2 text-slate-900 group-hover:text-brand-blue transition-colors">{item.title}</h3>
+                  <p className="text-slate-500 font-bold text-sm line-clamp-2">{item.description}</p>
+                </motion.div>
+              );
+
+              return item.link ? (
+                <a key={i} href={item.link} target="_blank" rel="noopener noreferrer">
+                  {CardContent}
+                </a>
+              ) : (
+                <div key={i}>{CardContent}</div>
+              );
+            })}
           </div>
         </div>
       </section>

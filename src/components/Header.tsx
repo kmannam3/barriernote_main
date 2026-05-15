@@ -25,10 +25,16 @@ export default function Header() {
       </nav>
       
       <div className="flex items-center gap-4">
-        <Button className="bg-brand-blue hover:bg-brand-blue/90 text-white rounded-full px-6">
-          <MessageCircle className="w-4 h-4 mr-2" />
-          무료 진단 받기
-        </Button>
+        <a 
+          href="https://docs.google.com/forms/d/e/1FAIpQLSc5oLDk1JpMJFR6xVA3Y8u006KRA-D4S9uaPk1AieqVFaWFoQ/viewform?fbzx=-2137932527351954253"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button className="bg-brand-blue hover:bg-brand-blue/90 text-white rounded-full px-6">
+            <MessageCircle className="w-4 h-4 mr-2" />
+            무료 진단 받기
+          </Button>
+        </a>
       </div>
     </motion.header>
   );
